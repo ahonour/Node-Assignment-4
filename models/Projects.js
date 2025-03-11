@@ -2,11 +2,12 @@ const mongoose = require('mongoose');
 
 const projectsSchema = mongoose.Schema(
   {
+    _id: mongoose.Schema.Types.ObjectId,
     title: { type: 'String', required: true },
     summary: { type: 'String', required: true },
     tech: { type: Array, required: true },
     screenshot: { type: 'String', required: true },
-    id: { type: Number, required: true },
+    // id: { type: Number, required: true },
   },
 
   { collection: 'projects' }
