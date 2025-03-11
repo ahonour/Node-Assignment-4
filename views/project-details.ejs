@@ -1,0 +1,16 @@
+<div id="project-details" class="project-details">
+  <div class="project" id="project-<%= project.id %>">
+    <h2 class="project-title"><%= project.title%></h2>
+    <img
+      class="project-image"
+      src="<%= project.screenshot %>"
+      alt="image of project <%= project.id %>"
+    />
+    <p class="project-summary"><%= project.summary %></p>
+    <div class="tag-container">
+      <% for( let i = 0; i < project.tech.length; i++ ) { %>
+      <span class="tag"><%= project.tech[i] %> </span>
+      <% } %>
+    </div>
+  </div>
+</div>

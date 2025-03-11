@@ -1,0 +1,148 @@
+/* Basic CSS Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  font-family: Arial, sans-serif;
+}
+
+html {
+  background-color: whitesmoke;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+body {
+  margin: auto;
+  width: 90vw;
+}
+
+header {
+  padding: 2rem 0;
+  display: flex;
+  justify-content: space-between;
+  background-color: navy;
+  margin-bottom: 2rem;
+}
+
+main {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+h1 {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.site-title {
+  color: white;
+  margin-left: 1rem;
+}
+
+.site-nav li {
+  list-style: none;
+  display: inline-block;
+  margin-right: 0.5rem;
+}
+
+.site-nav a {
+  color: white;
+  padding: 0.5rem 1rem;
+  text-decoration: none; /* Remove underline */
+  transition: color 0.3s ease; /* Smooth transition for color change */
+}
+
+.site-nav a:hover {
+  background-color: rgb(16, 16, 157); /* Lighten color on hover */
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+}
+
+.project-container {
+  display: flex;
+  width: 100%;
+}
+
+.project-title,
+.project-summary,
+#searchForm input {
+  text-align: center;
+}
+
+.project-image {
+  width: 90%;
+  margin: auto;
+  height: 200px;
+}
+
+.project-title,
+.project-summary {
+  margin: 1rem 0;
+  padding: 0 0.5rem;
+}
+
+.project {
+  width: 30%;
+  height: minmax(300px, 500px);
+  margin: 1rem;
+  padding: 1rem;
+  border-radius: 10px;
+  background-color: mediumturquoise;
+}
+
+.contact-form {
+  background-color: rgba(180, 174, 174, 0.523);
+  padding: 1rem;
+  border-radius: 10px;
+}
+
+.tag-container {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.form-title {
+  font-size: large;
+  font-weight: 650;
+  text-align: center;
+}
+
+input,
+textarea {
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+
+.project-details {
+  min-width: 600px;
+}
+
+.project-details .project {
+  width: 100%;
+}
+
+.project-details .project-image {
+  max-width: 400px;
+}
+
+.tag {
+  margin-bottom: 0.3rem;
+  padding: 0.2rem 0.5rem;
+  background-color: rgba(16 198 113 / 0.52);
+  border-radius: 5px;
+}
