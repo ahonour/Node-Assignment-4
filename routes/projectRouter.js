@@ -7,7 +7,11 @@ const ProjectsController = require('../controllers/ProjectsController.js');
 // const viewData = [];
 
 projectRouter.get('/search', ProjectsController.Search);
-projectRouter.get('/:id', ProjectsController.Detail);
+projectRouter.get('/create', ProjectsController.Create);
+projectRouter.post('/create', ProjectsController.CreateProject);
 projectRouter.get('/', ProjectsController.Index);
+projectRouter.get('/:id', ProjectsController.Detail);
+projectRouter.get('/:id/delete', ProjectsController.Delete);
+// projectRouter.get('/:id/edit', ProjectsController.Edit);
 
 module.exports = projectRouter;

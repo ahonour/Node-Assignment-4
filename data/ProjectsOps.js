@@ -34,6 +34,19 @@ class ProjectsOps {
 
     return projects;
   }
+
+  async deleteProject(id) {
+    let project = await Projects.findOneAndDelete({ id: Number(id) });
+    console.log(`Tried to delete ${project}`);
+    return project;
+  }
+
+  async createProject(project) {
+    console.log('creating project');
+    let newProject = new Projects(project);
+    await newProject.save();
+    return newProject;
+  }
 }
 
 module.exports = ProjectsOps;

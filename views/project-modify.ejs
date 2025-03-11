@@ -1,0 +1,51 @@
+<h2><%= profile_id ? "Edit" : "Create" %> Profile</h2>
+
+<form
+  action="<% project.id ? `/projects/${project.id}/edit` : `/projects/create` %>"
+  method="post"
+  enctype="multipart/form-data"
+>
+  <input
+    type="hidden"
+    id="project_id"
+    name="project_id"
+    value="<%= project.id %>"
+  />
+
+  <label for="title" class="visually-hidden">Title:</label>
+  <input
+    id="title"
+    name="title"
+    type="text"
+    placeholder="Title"
+    value="<%= project.title %>"
+  />
+
+  <label for="screenshot" class="visually-hidden">Screenshot:</label>
+  <input
+    type="file"
+    name="projectImg"
+    id="projectImg"
+    value="<%= project.screenshot %>"
+  />
+
+  <label for="summary" class="visually-hidden">Summary:</label>
+  <input
+    id="summary"
+    name="summary"
+    type="text"
+    placeholder="Summary"
+    value="<%= project.summary %>"
+  />
+
+  <label for="tech" class="visually-hidden">Tech:</label>
+  <input
+    id="tech"
+    name="tech"
+    type="text"
+    placeholder="Tech (comma seperated)"
+    value=""
+  />
+
+  <button type="submit" value="Submit">Submit</button>
+</form>

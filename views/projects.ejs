@@ -17,6 +17,17 @@
       <span class="tag"><%= projects[i].tech[j] %> </span>
       <% } %>
     </div>
+    <div class="action-container">
+      <a href="/projects/<%= projects[i].id %>/edit" class="project-link"
+        >Edit Project</a
+      >
+      <a href="/projects/<%= projects[i].id %>/delete" class="project-link"
+        >Delete Project</a
+      >
+      <a href="/projects/<%= projects[i].id %>" class="project-link"
+        >View Project</a
+      >
+    </div>
   </div>
   <% } %>
 </div>
