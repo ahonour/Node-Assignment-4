@@ -134,7 +134,7 @@ exports.CreateProject = [
 
     let responseObj = await _projectsOps.createProject(tempProjectObj);
 
-    if (responseObj.errorMsg == '') {
+    if (responseObj) {
       let projects = await _projectsOps.getAllProjects();
       response.render('projects', {
         title: 'Projects',

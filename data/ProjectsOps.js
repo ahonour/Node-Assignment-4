@@ -46,10 +46,17 @@ class ProjectsOps {
     return project;
   }
 
+  // async createProject(project) {
+  //   console.log('creating project');
+  //   let newProject = new Projects(project);
+  //   await newProject.save();
+  //   return newProject;
+  // }
+
   async createProject(project) {
     console.log('creating project');
-    let newProject = new Projects(project);
-    await newProject.save();
+    let newProject = await Projects.insertOne(project);
+    console.log(`new project is ${newProject}`);
     return newProject;
   }
 
