@@ -47,6 +47,16 @@ class ProjectsOps {
     await newProject.save();
     return newProject;
   }
+
+  async updateProject(id, project) {
+    console.log(`updating project with id ${id}`);
+    let updatedProject = await Projects.findOneAndUpdate(
+      { id: Number(id) },
+      project,
+      { new: true }
+    );
+    return updatedProject;
+  }
 }
 
 module.exports = ProjectsOps;

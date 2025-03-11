@@ -1,8 +1,23 @@
 const ProjectsOps = require('../data/ProjectsOps.js');
+const multer = require('multer');
+const path = require('path'); // Add this at the top
+
+// Create storage configuration
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'public/images/');
+  },
+  filename: function (req, file, cb) {
+    // Get original extension
+    const ext = path.extname(file.originalname);
+
+    cb(null, Date.now() + '-' + file.originalname);
+  },
+});
 
 const _projectsOps = new ProjectsOps();
-const multer = require('multer');
-const upload = multer({ dest: 'public/images/' });
+
+const upload = multer({ storage: storage });
 
 exports.Index = async function (request, response) {
   let projects = await _projectsOps.getAllProjects();
@@ -93,15 +108,82 @@ exports.Create = async function (request, response) {
 exports.CreateProject = [
   upload.single('projectImg'),
   async function (request, response) {
-    let tempProjectObj = new Projects({
+    let tech = request.body.tech.split(',').map((t) => t.trim());
+
+    // Check if a file was uploaded
+    let screenshotPath = request.file
+      ? `/images/${request.file.filename}`
+      : request.body.currentScreenshot;
+
+    let tempProjectObj = {
       title: request.body.title,
       summary: request.body.summary,
-      tech: request.body.tech,
-      screenshot: request.file.filename,
+      tech: tech,
+      screenshot: screenshotPath,
       id: request.body.id,
-    });
+    };
+    console.log(tempProjectObj);
 
-    let responseObj = await _projectsOps.createProject(tempProjectObj);
+    // let responseObj = await _projectsOps.createProject(tempProjectObj);
+
+    // if (responseObj.errorMsg == '') {
+    //   let projects = await _projectsOps.getAllProjects();
+    //   response.render('projects', {
+    //     title: 'Projects',
+    //     projects: projects,
+    //   });
+    // } else {
+    //   console.log('An error occurred. Item not created.');
+    //   console.log(request.body);
+    //   response.render('project-modify', {
+    //     title: 'Add a Project',
+    //     project: request.body,
+    //     message: responseObj.errorMsg,
+    //   });
+    // }
+    let projects = await _projectsOps.getAllProjects();
+    response.render('projects', {
+      title: 'Projects',
+      projects: projects,
+    });
+  },
+];
+
+exports.Edit = async function (request, response) {
+  const projectId = request.params.id;
+  console.log(`loading single project by id ${projectId}`);
+  let project = await _projectsOps.getProjectById(projectId);
+  if (project) {
+    response.render('project-modify', {
+      title: 'Edit Project',
+      project: project,
+      message: null,
+    });
+  } else {
+    console.log('Error, project not found');
+    response.render('error');
+  }
+};
+exports.Update = [
+  upload.single('projectImg'),
+  async function (request, response) {
+    let tech = request.body.tech.split(',').map((t) => t.trim());
+
+    // Check if a file was uploaded
+    let screenshotPath = request.file
+      ? `/images/${request.file.filename}`
+      : request.body.currentScreenshot;
+
+    let tempProjectObj = {
+      title: request.body.title,
+      summary: request.body.summary,
+      tech: tech,
+      screenshot: screenshotPath,
+      id: request.body.id,
+    };
+    console.log(tempProjectObj);
+
+    let responseObj = await _projectsOps.updateProject(tempProjectObj);
 
     if (responseObj.errorMsg == '') {
       let projects = await _projectsOps.getAllProjects();
@@ -113,10 +195,15 @@ exports.CreateProject = [
       console.log('An error occurred. Item not created.');
       console.log(request.body);
       response.render('project-modify', {
-        title: 'Add a Project',
+        title: 'Edit a Project',
         project: request.body,
         message: responseObj.errorMsg,
       });
     }
+    // let projects = await _projectsOps.getAllProjects();
+    // response.render('projects', {
+    //   title: 'Projects',
+    //   projects: projects,
+    // });
   },
 ];

@@ -12,6 +12,7 @@ projectRouter.post('/create', ProjectsController.CreateProject);
 projectRouter.get('/', ProjectsController.Index);
 projectRouter.get('/:id', ProjectsController.Detail);
 projectRouter.get('/:id/delete', ProjectsController.Delete);
-// projectRouter.get('/:id/edit', ProjectsController.Edit);
+projectRouter.get('/:id/edit', ProjectsController.Edit);
+projectRouter.post('/:id/edit', ProjectsController.Update);
 
 module.exports = projectRouter;

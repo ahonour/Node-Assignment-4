@@ -2,6 +2,7 @@
 <form action="projects/search" method="get" name="searchForm" id="searchForm">
   <input type="text" name="searchTerm" placeholder="Search projects" />
 </form>
+<a href="/projects/create" class="project-link">Create Project</a>
 <div class="project-container" id="project-container">
   <% for (let i = 0; i < projects.length; i++) { %>
   <div class="project" id="project-<%= projects[i].id %>">

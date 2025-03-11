@@ -146,3 +146,8 @@ textarea {
   background-color: rgba(16 198 113 / 0.52);
   border-radius: 5px;
 }
+
+.modify-title {
+  width: 100%;
+  text-align: center;
+}
