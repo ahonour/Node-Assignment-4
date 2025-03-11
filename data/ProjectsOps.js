@@ -12,10 +12,15 @@ class ProjectsOps {
     console.log(`these are the projects: ${projects}`);
     return projects;
   }
+  // async getProjectById(id) {
+  //   console.log(`getting project by id ${id}`);
+  //   let project = await Projects.findOne({ id: Number(id) });
+  //   console.log(project);
+  //   return project;
+  // }
   async getProjectById(id) {
-    console.log(`getting project by id ${id}`);
-    let project = await Projects.findOne({ id: Number(id) });
-    console.log(project);
+    let project = await Projects.findById(id);
+    console.log(`project by id is ${project}`);
     return project;
   }
   async getProjectBySearchTerm(searchTerm) {
@@ -36,7 +41,7 @@ class ProjectsOps {
   }
 
   async deleteProject(id) {
-    let project = await Projects.findOneAndDelete({ id: Number(id) });
+    let project = await Projects.findOneAndDelete({ _id: id });
     console.log(`Tried to delete ${project}`);
     return project;
   }
@@ -48,14 +53,27 @@ class ProjectsOps {
     return newProject;
   }
 
-  async updateProject(id, project) {
-    console.log(`updating project with id ${id}`);
-    let updatedProject = await Projects.findOneAndUpdate(
-      { id: Number(id) },
-      project,
-      { new: true }
-    );
-    return updatedProject;
+  // async updateProject(project) {
+  //   console.log(`updating project ${project}`);
+  //   let updatedProject = await Projects.findOneAndUpdate(
+  //     { _id: project._id },
+  //     project,
+  //     { new: true }
+  //   );
+  //   return updatedProject;
+  // }
+  async updateProject(project) {
+    try {
+      const { _id, ...projectData } = project;
+      let updatedProject = await Projects.findByIdAndUpdate(_id, projectData, {
+        new: true,
+      });
+      console.log(`updated project ${updatedProject}`);
+      return updatedProject;
+    } catch (err) {
+      console.error('Error updating project:', err);
+      throw err; // Or handle the error as appropriate
+    }
   }
 }
 

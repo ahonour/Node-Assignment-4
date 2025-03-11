@@ -10,22 +10,23 @@
     <img
       class="project-image"
       src="<%= projects[i].screenshot %>"
-      alt="image of project <%= projects[i].id %>"
+      alt="image of project"
     />
     <p class="project-summary"><%= projects[i].summary %></p>
+    <p>project _id: <%= projects[i]._id %></p>
     <div class="tag-container">
       <% for (let j = 0; j < projects[i].tech.length; j++) { %>
       <span class="tag"><%= projects[i].tech[j] %> </span>
       <% } %>
     </div>
     <div class="action-container">
-      <a href="/projects/<%= projects[i].id %>/edit" class="project-link"
+      <a href="/projects/<%= projects[i]._id %>/edit" class="project-link"
         >Edit Project</a
       >
-      <a href="/projects/<%= projects[i].id %>/delete" class="project-link"
+      <a href="/projects/<%= projects[i]._id %>/delete" class="project-link"
         >Delete Project</a
       >
-      <a href="/projects/<%= projects[i].id %>" class="project-link"
+      <a href="/projects/<%= projects[i]._id %>" class="project-link"
         >View Project</a
       >
     </div>

@@ -1,6 +1,7 @@
 const ProjectsOps = require('../data/ProjectsOps.js');
 const multer = require('multer');
-const path = require('path'); // Add this at the top
+const path = require('path');
+const fs = require('fs');
 
 // Create storage configuration
 const storage = multer.diskStorage({
@@ -87,6 +88,14 @@ exports.Delete = async function (request, response) {
   if (delProject) {
     console.log(`successfully deleted ${delProject} (probably)`);
     let projects = await _projectsOps.getAllProjects();
+    const filePath = path.join('public', delProject.screenshot);
+    fs.unlink(filePath, (err) => {
+      if (err) {
+        console.error(`Error removing file: ${err}`);
+        return;
+      }
+      console.log(`File ${filePath} has been successfully removed.`);
+    });
     response.render('projects', {
       title: 'Projects',
       projects: projects,
@@ -120,32 +129,26 @@ exports.CreateProject = [
       summary: request.body.summary,
       tech: tech,
       screenshot: screenshotPath,
-      id: request.body.id,
     };
     console.log(tempProjectObj);
 
-    // let responseObj = await _projectsOps.createProject(tempProjectObj);
+    let responseObj = await _projectsOps.createProject(tempProjectObj);
 
-    // if (responseObj.errorMsg == '') {
-    //   let projects = await _projectsOps.getAllProjects();
-    //   response.render('projects', {
-    //     title: 'Projects',
-    //     projects: projects,
-    //   });
-    // } else {
-    //   console.log('An error occurred. Item not created.');
-    //   console.log(request.body);
-    //   response.render('project-modify', {
-    //     title: 'Add a Project',
-    //     project: request.body,
-    //     message: responseObj.errorMsg,
-    //   });
-    // }
-    let projects = await _projectsOps.getAllProjects();
-    response.render('projects', {
-      title: 'Projects',
-      projects: projects,
-    });
+    if (responseObj.errorMsg == '') {
+      let projects = await _projectsOps.getAllProjects();
+      response.render('projects', {
+        title: 'Projects',
+        projects: projects,
+      });
+    } else {
+      console.log('An error occurred. Item not created.');
+      console.log(request.body);
+      response.render('project-modify', {
+        title: 'Add a Project',
+        project: request.body,
+        message: responseObj.errorMsg,
+      });
+    }
   },
 ];
 
@@ -175,17 +178,16 @@ exports.Update = [
       : request.body.currentScreenshot;
 
     let tempProjectObj = {
+      _id: request.body._id,
       title: request.body.title,
       summary: request.body.summary,
       tech: tech,
       screenshot: screenshotPath,
-      id: request.body.id,
     };
-    console.log(tempProjectObj);
 
     let responseObj = await _projectsOps.updateProject(tempProjectObj);
 
-    if (responseObj.errorMsg == '') {
+    if (responseObj) {
       let projects = await _projectsOps.getAllProjects();
       response.render('projects', {
         title: 'Projects',
@@ -200,10 +202,5 @@ exports.Update = [
         message: responseObj.errorMsg,
       });
     }
-    // let projects = await _projectsOps.getAllProjects();
-    // response.render('projects', {
-    //   title: 'Projects',
-    //   projects: projects,
-    // });
   },
 ];
