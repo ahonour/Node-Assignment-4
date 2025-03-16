@@ -188,6 +188,16 @@ exports.Update = [
     let responseObj = await _projectsOps.updateProject(tempProjectObj);
 
     if (responseObj) {
+      if (request.file && request.body.currentScreenshot) {
+        const oldFilePath = path.join('public', request.body.currentScreenshot);
+        fs.unlink(oldFilePath, (err) => {
+          if (err) {
+            console.error(`Error removing old file: ${err}`);
+            return;
+          }
+          console.log(`Old file ${oldFilePath} has been successfully removed.`);
+        });
+      }
       let projects = await _projectsOps.getAllProjects();
       response.render('projects', {
         title: 'Projects',

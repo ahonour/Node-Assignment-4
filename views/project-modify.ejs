@@ -1,6 +1,7 @@
 <h2 class="modify-title"><%= project.id ? "Edit" : "Create" %> Profile</h2>
 
 <form
+  class="project-form"
   action="<%= project._id ? `/projects/${project._id}/edit` : `/projects/create` %>"
   method="post"
   enctype="multipart/form-data"
